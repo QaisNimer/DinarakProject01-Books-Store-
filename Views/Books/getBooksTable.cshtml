@@ -1,0 +1,85 @@
+﻿@model IEnumerable<DinarakProject01.Models.BookClass>
+
+@*@{
+        var adminRole = ;
+        var userNameRole = ViewBag.nameRole;
+    }*@
+
+@if (ViewBag.getRole != null)
+{
+    <title>Dinarak Books Store</title>
+
+    <ul class="right-menu">
+        <li> <input type="text" id="label" name="name" readonly value="@ViewBag.nameRole" /> </li>
+        <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
+        <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
+    </ul>
+    <h2>Welcome To Our Store</h2>
+    using (Html.BeginForm("getBooksTable", "Books", FormMethod.Post))
+    {
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <td style="border: 1px solid #817049; text-align: center ">Serial Number</td>
+                    <td style="border: 1px solid #817049; text-align: center ">Book Name</td>
+                    <td style="border: 1px solid #817049; text-align: center ">The Book</td>
+                    <td style="border: 1px solid #817049; text-align: center ">Number Of Books</td>
+                    <td colspan="4" style="border: 1px solid #817049; text-align: center "><input type="button" value="ADD YOUR BOOK" id="AddBookBtn" onclick="location.href='/Books/getCreateBook'" /> </td>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid #817049; text-align: center ">@item.SerialNumber</td>
+                        <td style="border: 1px solid #817049; text-align: center ">@item.BookName</td>
+                        <td style="border: 1px solid #817049; text-align: center "> <img src="@item.ImageLink" width="150" height="150" /></td>
+                        <td style="border: 1px solid #817049; text-align: center ">@item.NumOfBooks</td>
+                        <td><input type="button" value="Edit" id="viewBook" onclick="location.href='/Books/getEditBooks/@item.SerialNumber'" /> </td>
+                        <td><input type="button" value="View" id="viewBook" onclick="location.href='/Books/getView/@item.SerialNumber'" /> </td>
+                        <td><input type="button" value="Buy" id="viewBook" onclick="location.href='/Books/getBuy/@item.SerialNumber'" /></td>
+                        <td><input type="button" value="Delete" id="viewBook" onclick="location.href='/Books/getDelete/@item.SerialNumber'" /></td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    }
+}
+else
+{
+    //var x = ViewBag.nameRole;
+    <title>Dinarak Books Store</title>
+    <ul class="right-menu">
+        <li> <input type="text" name="Role" readonly value="@ViewBag.nameRole" /> </li>
+        <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
+        <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
+    </ul>
+
+    <h2>Welcome To Our Store</h2>
+    using (Html.BeginForm("getBooksTable", "Books", FormMethod.Post))
+    {
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <td style="border: 1px solid #817049; text-align: center ">Serial Number</td>
+                    <td style="border: 1px solid #817049; text-align: center ">Book Name</td>
+                    <td style="border: 1px solid #817049; text-align: center ">The Book</td>
+                    <td style="border: 1px solid #817049; text-align: center ">Number Of Books</td>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tbody>
+                    <tr>
+                        <td style="border: 1px solid #817049; text-align: center ">@item.SerialNumber</td>
+                        <td style="border: 1px solid #817049; text-align: center ">@item.BookName</td>
+                        <td style="border: 1px solid #817049; text-align: center "> <img src="@item.ImageLink" width="150" height="150" /></td>
+                        <td style="border: 1px solid #817049; text-align: center ">@item.NumOfBooks</td>
+                        <td><input type="button" value="View" id="viewBook" onclick="location.href='/Books/getView/@item.SerialNumber'" /> </td>
+                        <td><input type="button" value="Buy" id="viewBook" onclick="location.href='/Books/getBuy/@item.SerialNumber'" /></td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    }
+}

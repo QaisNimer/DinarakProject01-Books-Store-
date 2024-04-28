@@ -1,0 +1,406 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        body {
+            background-color: black;
+            color: white
+        }
+
+        h2 {
+            font-family: "Press Start 2P",Consolas;
+            color: #EF2D56;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #label {
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-right: 5px;
+            letter-spacing: 0.025rem;
+            padding: 0.95rem 0.5rem;
+            font-style: normal;
+            text-transform: uppercase;
+            color: #FFFFFF;
+            background-color: #EF2D56;
+            border-radius: 0rem;
+            -webkit-border-radius: 0rem;
+            -moz-border-radius: 0rem;
+            border-style: none;
+            border-width: 0rem;
+            border-color: #EF2D56;
+            -webkit-box-shadow: inset 32px -8px 0px -16px rgba(51,51,51,1);
+            -moz-box-shadow: inset 32px -8px 0px -16px rgba(51,51,51,1);
+            /* Ensure all labels have the same width */
+            width: 140px; /* Adjust this width according to your design */
+            display: inline-block;
+        }
+
+
+        #Uname {
+            padding: 6px 12px;
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+        }
+
+        #Pass {
+            padding: 6px 12px;
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+            transition: border 0.15s ease 0s;
+        }
+
+        #Bookname {
+            padding: 6px 12px;
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+        }
+
+        #SerialNum {
+            padding: 6px 12px;
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+        }
+
+        #DescripOfBook {
+            padding: 6px 12px;
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+        }
+
+        #NumberBooks {
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+        }
+
+        #numOfBuyBooks {
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+        }
+
+        #TypeBook {
+            padding: 6px 12px;
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+        }
+
+        #SerialNumberOfBook {
+            padding: 6px 12px;
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+        }
+
+        #PriceOfBook {
+            padding: 6px 12px;
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+        }
+
+        #AuthorOfBook {
+            padding: 6px 12px;
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+        }
+
+        #ImgLink {
+            padding: 6px 12px;
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+        }
+
+        #log {
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 0.025rem;
+            font-style: normal;
+            text-transform: uppercase;
+            color: #f2093a;
+            background-color: rgb(60, 63, 68);
+            border-radius: 1.25rem;
+            -webkit-border-radius: 1.25rem;
+            -moz-border-radius: 1.25rem;
+            padding: 0.35rem 0.75rem;
+            border-style: ridge;
+            border-width: 0.125rem;
+            border-color: #EF2D56;
+        }
+
+        #viewBook {
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 0.025rem;
+            font-style: normal;
+            text-transform: uppercase;
+            color: #f2093a;
+            background-color: rgb(60, 63, 68);
+            border-radius: 1.25rem;
+            -webkit-border-radius: 1.25rem;
+            -moz-border-radius: 1.25rem;
+            padding: 0.35rem 0.75rem;
+            border-style: ridge;
+            border-width: 0.125rem;
+            border-color: #EF2D56;
+        }
+
+        #buyBookBtn {
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 0.025rem;
+            font-style: normal;
+            text-transform: uppercase;
+            color: #f2093a;
+            background-color: rgb(60, 63, 68);
+            border-radius: 1.25rem;
+            -webkit-border-radius: 1.25rem;
+            -moz-border-radius: 1.25rem;
+            padding: 0.35rem 0.75rem;
+            border-style: ridge;
+            border-width: 0.125rem;
+            border-color: #EF2D56;
+        }
+
+        #AddBookBtn {
+            background-color: #333333;
+            border: none;
+            border-style: ridge;
+            border-color: #EF2D56;
+            color: #EF2D56;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .styled-table {
+            border-collapse: collapse;
+            margin: 35px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 15px #EF2D56;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+            .styled-table thead tr {
+                background-color: #333;
+                color: #ffffff;
+                text-align: left;
+            }
+
+            .styled-table th,
+            .styled-table td {
+                padding: 12px 15px;
+            }
+
+            .styled-table tbody tr {
+                background-color: #EF2D56;
+            }
+
+        ul.left-menu {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            position: fixed;
+            left: 0;
+            z-index: 999; /* Ensures it's above other elements */
+        }
+
+        ul.right-menu {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            position: fixed;
+            right: 0;
+            left: 1000px;
+            z-index: 999;
+            /*background-color:forestgreen;*/ /* Activate it when you want to know the right menu length */
+        }
+
+        ul li {
+            display: inline-block;
+        }
+
+        ul.left-menu li {
+            position: relative; /* Ensure positioning context */
+        }
+
+
+        ul.right-menu li {
+            float: right;
+        }
+
+        ul.left-menu li i {
+            display: block;
+            padding: 14px 16px;
+            color: #ef2d56;
+            font-size: 30px;
+        }
+
+        ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        ul.left-menu li i:hover {
+            cursor: pointer; /* Show pointer cursor on hover */
+        }
+
+        ul li a:hover {
+            background-color: #EF2D56;
+            color: #333;
+        }
+
+
+
+        ul {
+            /*list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: black;*/
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            position: fixed;
+            left: 0;
+        }
+
+        #rig {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: black;
+            position: fixed; /* or absolute */
+            right: 0;
+        }
+
+        li {
+            float: left;
+        }
+
+            li input {
+                float: left;
+            }
+
+            li a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+                li a:hover {
+                    background-color: #EF2D56;
+                    color: #333;
+                }
+    </style>
+</head>
+<body>
+    @*<ul>
+        <li><a href="/MainPage/getMainPage">SignOut</a></li>
+        <li><a href="mailto:qaisihabnimer@gmail.com">Contact</a></li>
+    </ul>*@
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Made By : Qais Nimer</p>
+            </footer>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+
+</body>
+</html>

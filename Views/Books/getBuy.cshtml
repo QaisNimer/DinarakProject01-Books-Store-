@@ -1,0 +1,82 @@
+﻿@model DinarakProject01.Models.BookClass
+@{
+    ViewBag.Title = "getBuy";
+}
+<title>Buy Books</title>
+<ul class="left-menu">
+    <li>
+        <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable'"
+           style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
+    </li>
+</ul>
+<ul class="right-menu">
+    <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
+    <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
+</ul>
+<br />
+<br />
+@using (Html.BeginForm("getBuy", "Books", FormMethod.Post))
+{
+    if (Model != null)
+    {
+        <div>
+            <h2>Buy @Model.BookName</h2>
+            <img src="@Model.ImageLink" width="300" height="300" />
+            <p>Author: @Model.Author</p>
+            <p>Genres: @Model.TypeOfBook</p>
+            <p>Description: @Model.DescriptionOfBook</p>
+            <form id="buyForm">
+                <input type="hidden" id="numOfBuyBooks" name="numOfBooks" value="1" />
+                <!-- Assuming you want to start with 1 book -->
+                <p>Maximum Number Of Books: @Model.NumOfBooks</p>
+                @*<input type="number" id="numOfBuyBooks" min="1" max="@Model.NumOfBooks" placeholder="Enter quantity" required />*@
+                <input type="text" id="numOfBuyBooks" placeholder="max is @Model.NumOfBooks" required>
+                <button type="button" id="buyBookBtn">Order Now</button>
+                @*<div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>*@
+            </form>
+        </div>
+        @*<div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>*@
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+ <!-- Ensure jQuery is included -->
+
+        <script>
+    $(document).ready(function() { // Ensure the DOM is fully loaded before executing JavaScript
+        $("#buyBookBtn").click(function() { // Bind click event to the button using jQuery
+            var scope = parseInt($("#numOfBuyBooks").val()); // Use jQuery to get the value of the input
+            var numOfBooks = parseInt('@Model.NumOfBooks'); // Assuming NumOfBooks is an integer
+
+            if (scope <= numOfBooks) {
+                // Perform the subtraction on the client side
+                numOfBooks = numOfBooks-scope;
+
+                // Update the value on the server side using AJAX
+                $.ajax({
+                    type: 'POST',
+                    url: '/Books/getBuy',
+                    data: { numOfBooks: numOfBooks },
+                    success: function(response) {
+                        // Redirect to the Books table page after successful update
+                        window.location.href = '/Books/getBooksTable';
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText); // Log any errors to the console
+                    }
+                });
+            } else {
+                alert("You're trying to buy more books than available!");
+            }
+        });
+    });
+        </script>
+
+
+    }
+    else
+    {
+        <p>No data available</p>
+    }
+}

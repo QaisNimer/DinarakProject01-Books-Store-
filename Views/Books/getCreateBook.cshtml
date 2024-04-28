@@ -1,0 +1,79 @@
+﻿@model DinarakProject01.Models.BookClass
+@{
+    ViewBag.Title = "getCreateBook";
+}
+<title>Create Books</title>
+<ul class="left-menu">
+    <li>
+        <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable'"
+           style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
+    </li>
+</ul>
+<ul class="right-menu">
+    <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
+    <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
+</ul>
+@using (Html.BeginForm("getCreateBook", "Books", FormMethod.Post))
+{
+    <h2>Create Your Own Book</h2>
+    <div class="container">
+        <form id="creat">
+            <label id="label">
+                <b>
+                    Book Name
+                </b>
+            </label>
+            <input type="text" name="BookName" id="Bookname" placeholder="Book Name" required autofocus>
+            <br><br>
+
+            <label id="label">
+                <b>
+                    Number Of Books
+                </b>
+            </label>
+            <input type="text" id="NumberBooks" name="NumOfBooks" placeholder="Num Of Books" required  autofocus>
+            <br><br>
+
+            <label id="label">
+                <b>
+                    Description
+                </b>
+            </label>
+            <input type="text" name="DescriptionOfBook" id="DescripOfBook" placeholder="Short Descriotion" required>
+            <br><br>
+
+            <label id="label">
+                <b>
+                    Geners
+                </b>
+            </label>
+            <input type="text" name="TypeOfBook" id="TypeBook" placeholder="Action/Drama/Romance" required>
+            <br><br>
+
+            <label id="label">
+                <b>
+                    Price
+                </b>
+            </label>
+            <input type="text" name="Price" id="PriceOfBook" placeholder="100" required>
+            <br><br>
+
+            <label id="label">
+                <b>
+                    Author
+                </b>
+            </label>
+            <input type="text" name="Author" id="AuthorOfBook" placeholder="William Shakespeare" required>
+            <br><br>
+            <label id="label">
+                <b>
+                    Image URL
+                </b>
+            </label>
+            <input type="text" name="ImageLink" id="ImgLink" placeholder="Link From Website" required>
+            <br><br>
+            <input type="submit" name="log" id="log" value="CREATE" onclick="location.href='/Books/getCreateBook'">
+            <br><br>
+        </form>
+    </div>
+}

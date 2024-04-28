@@ -1,0 +1,46 @@
+﻿@model DinarakProject01.Models.DinarakClass
+<title>Update Data</title>
+<ul class="left-menu">
+    <li>
+        <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/MainPage/getLogin'"
+           style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
+    </li>
+</ul>
+<ul class="right-menu">
+    <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
+    <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
+</ul>
+<h2>UPDATE DATA </h2>
+<br />
+<br />
+@using (Html.BeginForm("getUpdate", "MainPage", FormMethod.Post))
+{
+    <div class="container">
+        <form id="creat">
+            <label id="label">
+                <b>
+                    Full Name
+                </b>
+            </label>
+            <input type="text" name="UserName" id="Uname" placeholder="Your Name" required autofocus>
+            <br><br>
+            <label id="label">
+                <b>
+                    Password
+                </b>
+            </label>
+            <input type="Password" name="Password" id="Pass" placeholder="Hard Pass Only" minlength="7" maxlength="14" required>
+            <br><br>
+            <input type="submit" name="log " id="log" value="Update" onclick="location.href='/MainPage/getLogin'">
+        </form>
+    </div>
+}
+@if (ViewBag.updateMessage != null)
+{
+    <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewBag.updateMessage");
+            };
+    </script>
+}
+

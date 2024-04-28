@@ -1,0 +1,26 @@
+﻿@model DinarakProject01.Models.BookClass
+<ul class="left-menu">
+    <li>
+        <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable'"
+           style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
+    </li>
+</ul>
+<ul class="right-menu">
+    <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
+    <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
+</ul>
+@if (Model != null)
+{
+    <div>
+        <h2>Details about @Model.BookName</h2>
+        <img src="@Model.ImageLink" width="300" height="300" />
+        <p>Author: @Model.Author</p>
+        <p>Genres: @Model.TypeOfBook</p>
+        <p>Description: @Model.DescriptionOfBook</p>
+    </div>
+}
+else
+{
+    <p>No data available</p>
+}
+

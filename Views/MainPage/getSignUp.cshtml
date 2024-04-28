@@ -1,0 +1,57 @@
+﻿@model DinarakProject01.Models.DinarakClass
+<title>SignUp Page</title>
+<ul class="left-menu">
+    <li>
+        <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/MainPage/getMainPage'"
+           style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
+    </li>
+</ul>
+<ul class="right-menu">
+    <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
+    <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
+</ul>
+@using (Html.BeginForm("getSignUp", "MainPage", FormMethod.Post))
+{
+    <h2>REGISTRATION PAGE</h2>
+    <div class="container">
+        <form id="creat">
+            <label id="label">
+                <b>
+                    Full Name
+                </b>
+            </label>
+            <input type="text" name="UserName" id="Uname" placeholder="Your Name" required autofocus>
+            <br><br>
+            <label id="label">
+                <b>
+                    Password
+                </b>
+            </label>
+            <input type="Password" name="Password" id="Pass" placeholder="Hard Pass Only" minlength="7" maxlength="14" required>
+            <br><br>
+            <input type="submit" name="log" id="log" value="Registrate" onclick="location.href='/MainPage/getMainPage'">
+            @if (ViewBag.faildSignUpMessage != null)
+            {
+                <script type="text/javascript">
+                var faildSignUpMessage = "@Html.Raw(ViewBag.faildSignUpMessage)";
+                window.onload = function () {
+                alert(faildSignUpMessage);
+                 };
+                </script>
+            }
+            @*else if (ViewBag.sucessSignUpMessage != null)
+            {
+                <script type="text/javascript">
+                var sucessSignUpMessage = "@Html.Raw(ViewBag.sucessSignUpMessage)";
+                window.onload = function () {
+                alert(sucessSignUpMessage);
+                };
+                </script>
+            }*@
+            <br><br>
+        </form>
+    </div>
+}
+
+
+

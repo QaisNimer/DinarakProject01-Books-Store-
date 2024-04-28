@@ -1,0 +1,88 @@
+﻿@model DinarakProject01.Models.DinarakClass
+<title>Main Page</title>
+<ul class="left-menu">
+    <li>
+        <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/MainPage/getLogin'"
+           style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
+    </li>
+</ul>
+<ul class="right-menu">
+    <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
+    <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
+</ul>
+<h2>DINARAK PROJECT</h2>
+<br />
+<br />
+@using (Html.BeginForm("getMainPage", "MainPage", FormMethod.Post))
+{
+    if (Model != null && Model.Id != null)
+    {
+        <script>
+        function myFunction() {
+            location.href='/Books/getBooksTable/@Model.Id';
+            alert("myFunction called!");
+        }
+        </script>
+    }
+    <div class="container">
+        <form id="creat" method="post">
+            <label id="label">
+                <b>
+                    UserName
+                </b>
+            </label>
+            <input type="text" name="UserName" id="Uname" placeholder="UserName" required autofocus>
+            <br><br>
+            <label id="label">
+                <b>
+                    Password
+                </b>
+            </label>
+            <input type="Password" name="Password" id="Pass" placeholder="Hard Pass Only" minlength="7" maxlength="14" required>
+            <br><br>
+            @if (ViewBag.faildLoginMessage != null)
+            {
+                <script type="text/javascript">
+                var faildLoginMessage = "@Html.Raw(ViewBag.FaildLoginMessage)";// Html.Raw() is used to prevent the HTML encoding of the message stored in ViewBag.faildLoginMessage. This should ensure that the alert message is displayed correctly without any encoding issues.
+                window.onload = function ()
+                {
+                    alert(faildLoginMessage);
+                };
+                </script>
+            }
+            <input type="submit" name="log" id="log" value="Log In" onclick="myFunction">
+            <br><br>
+            <input type="submit" name="sign" id="log" value="Sign Up" onclick="location.href='/MainPage/getSignUp">
+        </form>
+        @*<script>
+                function myFunction() {
+                    location.href='/Books/getBooksTable/@Model.Id'
+                    alert("myFunction called!");
+            }
+        </script>*@
+
+    </div>
+}
+
+
+@*@if (ViewBag.faildLoginMessage != null)
+        {
+        <script type="text/javascript">
+        var faildLoginMessage = "@Html.Raw(ViewBag.FaildLoginMessage)";// Html.Raw() is used to prevent the HTML encoding of the message stored in ViewBag.faildLoginMessage. This should ensure that the alert message is displayed correctly without any encoding issues.
+        window.onload = function ()
+        {
+         alert(faildLoginMessage);
+        };
+        </script>
+        }
+    else if (ViewBag.AdminMessage != null)
+    {
+        <script type="text/javascript">
+     var AdminMessage = "@Html.Raw(ViewBag.AdminMessage)";// Html.Raw() is used to prevent the HTML encoding of the message stored in ViewBag.faildLoginMessage. This should ensure that the alert message is displayed correctly without any encoding issues.
+     window.onload = function ()
+     {
+     alert(AdminMessage);
+     };
+        </script>
+    }*@
+
