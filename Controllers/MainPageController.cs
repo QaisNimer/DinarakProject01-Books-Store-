@@ -25,27 +25,12 @@ namespace DinarakProject01.Controllers
         public ActionResult getMainPage(DinarakClass dinClass/*,int?id*/)
         {
             var query = myDb.dinarakClasses.SingleOrDefault(x => x.UserName == dinClass.UserName && x.Password == dinClass.Password );
-            //var query2 = myDb.dinarakClasses.SingleOrDefault(x => x.Id == id);
             if (query != null)
             {
                 ViewBag.AdminMessage = string.Format(" Welcome Admin");
                 return RedirectToAction("getBooksTable", "Books", new {id=query.Id});
-                //if (query2 != null)
-                //{
-                //    ViewBag.AdminMessage = string.Format(" Welcome Admin");
-                //    return RedirectToAction("getBooksTable", "Books", new {});
-                //}
-                //else {
-                //    //ViewBag.Message = string.Format(" Welcome Admin");
-                //    return RedirectToAction("getBooksTable", "Books", new { id });
-                //}
-                
             }
-            //else if ( query2 != null )
-            //{
-            //    ViewBag.AdminMessage = string.Format(" Welcome User");
-            //    return RedirectToAction("getBooksTable","Books");
-            //}
+           
             else
             {
                 ViewBag.faildLoginMessage = string.Format("You Don't Have Account , Click on Signup And Be Part Of Our Family");
@@ -83,24 +68,27 @@ namespace DinarakProject01.Controllers
 
         /*SignUp Contoller*/
 
-
-
-
-
-
-
-
-
-
-
-
-
         // GET: Login
-        public ActionResult getLogin()
+        public ActionResult getLogin(int?id)
         {
             List<DinarakClass> dinClass = new List<DinarakClass>();
             dinClass = (from obj in myDb.dinarakClasses select obj).ToList();
-            return View(dinClass);
+            //return View(dinClass);
+
+            var getRole = (from obj in myDb.dinarakClasses where obj.Id == id select obj).FirstOrDefault();
+            if (getRole != null)
+            {
+                ViewBag.nameRole = getRole.UserName;
+                ViewBag.getRole = getRole.Role;
+                ViewBag.getId = getRole.Id;
+
+                return View(dinClass);
+            }
+            else
+            {
+                return View(dinClass);
+            }
+
         }
         public ActionResult deleteData(int id)
         {

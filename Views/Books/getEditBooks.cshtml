@@ -3,93 +3,93 @@
     ViewBag.Title = "getEditBooks";
 }
 <title>Edit On Books</title>
-<ul class="left-menu">
-    <li>
-        <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable'"
-           style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
-    </li>
-</ul>
-<ul class="right-menu">
-    <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
-    <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
-</ul>
-<br /><br />
-@using (Html.BeginForm("getEditBooks", "Books", FormMethod.Post))
+@if (ViewBag.getRole != null)
 {
-    <h2>Edit @Model.BookName</h2>
-    <div class="container">
-        <form id="creat">
+    <ul class="left-menu">
+            <li>
+                <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'"
+                   style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
+            </li>
+        </ul>
+    <ul class="right-menu">
+        <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
+        <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
+    </ul>
+    <br />
+    <br />
+    using (Html.BeginForm("getEditBooks", "Books", FormMethod.Post))
+    {
+        <h2>Edit @Model.BookName</h2>
+        <div class="container">
+            <form id="creat">
 
-            <label id="label">
-                <b>
-                    Serial Number
-                </b>
-            </label>
-            <input type="text" name="SerialNumber" id="SerialNum" value="@Model.SerialNumber" readonly>
-            <br /><br />
+                <label id="label">
+                    <b>
+                        Serial Number
+                    </b>
+                </label>
+                <input type="text" name="SerialNumber" id="SerialNum" value="@Model.SerialNumber" readonly>
+                <br /><br />
 
-            <label id="label">
-                <b>
-                    Book Name
-                </b>
-            </label>
-            <input type="text" name="BookName" id="Bookname" value="@Model.BookName" autofocus>
-            <br><br>
+                <label id="label">
+                    <b>
+                        Book Name
+                    </b>
+                </label>
+                <input type="text" name="BookName" id="Bookname" value="@Model.BookName" autofocus>
+                <br><br>
 
-            <label id="label">
-                <b>
-                    Number Of Books
-                </b>
-            </label>
-            <input type="number" id="NumberBooks" name="NumOfBooks" min="0" max="100" step="1" value="@Model.NumOfBooks">
-            <br><br>
+                <label id="label">
+                    <b>
+                        Number Of Books
+                    </b>
+                </label>
+                <input type="number" id="NumberBooks" name="NumOfBooks" min="0" max="100" step="1" value="@Model.NumOfBooks">
+                <br><br>
 
-            <label id="label">
-                <b>
-                    Description
-                </b>
-            </label>
-            <input type="text" name="DescriptionOfBook" id="DescripOfBook" value="@Model.DescriptionOfBook">
-            <br><br>
+                <label id="label">
+                    <b>
+                        Description
+                    </b>
+                </label>
+                <input type="text" name="DescriptionOfBook" id="DescripOfBook" value="@Model.DescriptionOfBook">
+                <br><br>
 
-            <label id="label">
-                <b>
-                    Geners
-                </b>
-            </label>
-            <input type="text" name="TypeOfBook" id="TypeBook"value="@Model.TypeOfBook">
-            <br><br>
+                <label id="label">
+                    <b>
+                        Geners
+                    </b>
+                </label>
+                <input type="text" name="TypeOfBook" id="TypeBook" value="@Model.TypeOfBook">
+                <br><br>
 
-            <label id="label">
-                <b>
-                    Price
-                </b>
-            </label>
-            <input type="text" name="Price" id="PriceOfBook"value="@Model.Price">
-            <br><br>
+                <label id="label">
+                    <b>
+                        Price
+                    </b>
+                </label>
+                <input type="text" name="Price" id="PriceOfBook" value="@Model.Price">
+                <br><br>
 
-            <label id="label">
-                <b>
-                    Author
-                </b>
-            </label>
-            <input type="text" name="Author" id="AuthorOfBook"value="@Model.Author">
-            <br><br>
-            <label id="label">
-                <b>
-                    Image URL
-                </b>
-            </label>
-            <input type="text" name="ImageLink" id="ImgLink" value="@Model.ImageLink">
-            <br />
-            <img src="@Model.ImageLink">
-            <br><br>
-            <input type="submit" name="log" id="log" value="Edit" onclick="location.href='/Books/getBooksTable'">
-            <br><br>
-        </form>
-    </div>
+                <label id="label">
+                    <b>
+                        Author
+                    </b>
+                </label>
+                <input type="text" name="Author" id="AuthorOfBook" value="@Model.Author">
+                <br><br>
+                <label id="label">
+                    <b>
+                        Image URL
+                    </b>
+                </label>
+                <input type="text" name="ImageLink" id="ImgLink" value="@Model.ImageLink">
+                <br />
+                <img src="@Model.ImageLink">
+                <br><br>
+                <input type="submit" name="log" id="log" value="Save" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'">
+                <br><br>
+            </form>
+        </div>
+    }
 }
-
-
-
-

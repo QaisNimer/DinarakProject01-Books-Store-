@@ -1,51 +1,57 @@
 ﻿@model List<DinarakProject01.Models.DinarakClass>
 <title>Reading Data Page</title>
-<ul class="left-menu">
-    <li>
-        <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/MainPage/getLogin'"
-           style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
-    </li>
-</ul>
-<ul class="right-menu">
-    <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
-    <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
-</ul>
-<h2>READING DATA</h2>
-@using (Html.BeginForm("getLogin", "MainPage", FormMethod.Post))
+@if (ViewBag.getRole != null)
 {
-    
-    <table class="styled-table">
-        <thead>
-            <tr>
-                <td>ID</td>
-                <td>User Name</td>
-                <td>Password</td>
-                <td>Update</td>
-                <td>Delete</td>
-            </tr>
-        </thead>
-        @foreach (var item in Model)
-        {
+    <ul class="left-menu">
+        <li>
+            <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'"
+               style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
+        </li>
+    </ul>
+    <ul class="right-menu">
+        @*<li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>*@
+        <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
+    </ul>
+    <h2>READING DATA</h2>
+    using (Html.BeginForm("getLogin", "MainPage", FormMethod.Post))
+    {
 
-           
-            
-
-            <tbody>
-
+        <table class="styled-table">
+            <thead>
                 <tr>
-                    <td>@item.Id</td>
-                    <td>@item.UserName</td>
-                    <td>@item.Password</td>
-                    <td><a href="/MainPage/getUpdate/@item.Id">Update</a></td>
-                    <td><a href="/MainPage/deleteData/@item.Id">Delete</a></td>
+                    <td>ID</td>
+                    <td>Role</td>
+                    <td>User Name</td>
+                    <td>Password</td>
+                    <td>Update</td>
+                    <td>Delete</td>
                 </tr>
-            </tbody>
-            
+            </thead>
+            @foreach (var item in Model)
+            {
 
-        }
 
 
-    </table>
+
+                <tbody>
+
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Role</td>
+                        <td>@item.UserName</td>
+                        <td>@item.Password</td>
+                        <td><a href="/MainPage/getUpdate/@item.Id">Update</a></td>
+                        <td><a href="/MainPage/deleteData/@item.Id">Delete</a></td>
+                    </tr>
+                </tbody>
+
+
+            }
+
+
+        </table>
+    }
+
 }
 
 

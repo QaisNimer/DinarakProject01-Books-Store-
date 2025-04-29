@@ -6,12 +6,13 @@
            style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
     </li>
 </ul>
-<ul class="right-menu">
+@*<ul class="right-menu">
     <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
     <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
-</ul>
+</ul>*@
 @using (Html.BeginForm("getSignUp", "MainPage", FormMethod.Post))
 {
+    
     <h2>REGISTRATION PAGE</h2>
     <div class="container">
         <form id="creat">
@@ -29,27 +30,113 @@
             </label>
             <input type="Password" name="Password" id="Pass" placeholder="Hard Pass Only" minlength="7" maxlength="14" required>
             <br><br>
-            <input type="submit" name="log" id="log" value="Registrate" onclick="location.href='/MainPage/getMainPage'">
+            <input type="checkbox" onclick="myFunctionShowPass()">Show Password
+            <script>
+                function myFunctionShowPass() {
+                    var x = document.getElementById("Pass");
+                    if (x.type === "password") {
+                        x.type = "text";
+                    } else {
+                        x.type = "password";
+                    }
+                }
+            </script>
+            <br /><br />
+            <input type="submit" name="log" id="log" value="Registrate" onclick="location.href = '/MainPage/getMainPage';">
             @if (ViewBag.faildSignUpMessage != null)
             {
                 <script type="text/javascript">
                 var faildSignUpMessage = "@Html.Raw(ViewBag.faildSignUpMessage)";
                 window.onload = function () {
                 alert(faildSignUpMessage);
-                 };
-                </script>
-            }
-            @*else if (ViewBag.sucessSignUpMessage != null)
-            {
-                <script type="text/javascript">
-                var sucessSignUpMessage = "@Html.Raw(ViewBag.sucessSignUpMessage)";
-                window.onload = function () {
-                alert(sucessSignUpMessage);
                 };
                 </script>
-            }*@
+            }
+
+            @*else if (ViewBag.sucessSignUpMessage != null)
+        {
+            <script type="text/javascript">
+            var sucessSignUpMessage = "@Html.Raw(ViewBag.sucessSignUpMessage)";
+            window.onload = function () {
+            alert(sucessSignUpMessage);
+            };
+            </script>
+        }*@
             <br><br>
         </form>
+        <div id="validation-box">
+            <h4>Password Must Contain</h4>
+            <p id="letter" class="invalid">Lowercase Letter</p>
+            <p id="capital" class="invalid">Capitalcase Letter</p>
+            <p id="number" class="invalid">Number</p>
+            <p id="symbols" class="invalid">Symbols</p>
+        </div>
+        <script id="signUpScript">
+            var myInput = document.getElementById("Pass");
+            var letter = document.getElementById("letter");
+            var capital = document.getElementById("capital");
+            var number = document.getElementById("number");
+            var symbol = document.getElementById("symbols");
+            var signUp_Btn = document.getElementById("log");
+            signUp_Btn.disabled = true;
+            myInput.onfocus = function () {
+                document.getElementById("validation-box").style.display = "block";
+            }
+            myInput.onblur = function () {
+                document.getElementById("validation-box").style.display = "none";
+            }
+            myInput.onkeyup = function () {
+                var lowerCaseLetters = /[a-z]/g;
+                if (myInput.value.match(lowerCaseLetters)) {
+                    letter.classList.remove("invalid");
+                    letter.classList.add("valid");
+                }
+                else {
+                    letter.classList.remove("valid");
+                    letter.classList.add("invalid");
+                }
+
+
+                var upperCaseLetters = /[A-Z]/g;
+                if (myInput.value.match(upperCaseLetters)) {
+                    capital.classList.remove("invalid");
+                    capital.classList.add("valid");
+                }
+                else {
+                    capital.classList.remove("valid");
+                    capital.classList.add("invalid");
+                }
+
+
+                var numbers = /[0-9]/g;
+                if (myInput.value.match(numbers)) {
+                    number.classList.remove("invalid");
+                    number.classList.add("valid");
+                }
+                else {
+                    number.classList.remove("valid");
+                    number.classList.add("invalid");
+                }
+
+                var symbols = /[$&+,:;=?#|'<>.^*()%!-]/g;
+                if (myInput.value.match(symbols)) {
+                    symbol.classList.remove("invalid");
+                    symbol.classList.add("valid");
+                }
+                else {
+                    symbol.classList.remove("valid");
+                    symbol.classList.add("invalid");
+                }
+                if (myInput.value.match(lowerCaseLetters) &&
+                    myInput.value.match(upperCaseLetters) &&
+                    myInput.value.match(numbers) &&
+                    myInput.value.match(symbols)) { signUp_Btn.disabled = false; }
+                else {
+                    signUp_Btn.disabled = true;
+                }
+            }
+
+        </script>
     </div>
 }
 

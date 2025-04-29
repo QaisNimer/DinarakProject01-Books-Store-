@@ -15,8 +15,8 @@ namespace DinarakProject01
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "MainPage", action = "getMainPage", id = UrlParameter.Optional }
+                url: "{controller}/{action}/{id}/{id2}",
+                defaults: new { controller = "MainPage", action = "getMainPage", id = UrlParameter.Optional,id2=UrlParameter.Optional }
             );
         }
     }
