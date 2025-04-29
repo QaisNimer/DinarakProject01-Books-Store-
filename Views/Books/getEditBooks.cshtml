@@ -3,21 +3,45 @@
     ViewBag.Title = "getEditBooks";
 }
 <title>Edit On Books</title>
-@if (ViewBag.getRole != null)
+@if (ViewBag.getRole == "Admin")
 {
     <ul class="left-menu">
-            <li>
-                <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'"
-                   style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
-            </li>
-        </ul>
+        <li>
+            <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'"
+               style="color:#bc5e1bda; font-size: 30px; outline-color: #817049 "></i>
+        </li>
+        <li>
+            <img src="~/Images/logo.png" alt="Alternate Text" id="logo_nav_id" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'" />
+        </li>
+    </ul>
     <ul class="right-menu">
-        <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
-        <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
+        <li> <input type="text" id="menuLabel" name="name" readonly value="@ViewBag.getRole : @ViewBag.nameRole" /> </li>
+        <li>
+            <a id="signOut_id" style="font-weight: bold;">Sign Out</a>
+            <script>
+                document.getElementById("signOut_id").addEventListener("click", function (event) {
+                    event.preventDefault();
+                    swal({
+                        title: "Are You Sure You Want To Sign Out ?",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then(
+                        (willSignOut) => {
+                            if (willSignOut) {
+                                location.href = '/MainPage/getMainPage';
+                            }
+                        }
+                    );
+                });
+            </script>
+        <li>
+            <a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a>
+        </li>
     </ul>
     <br />
     <br />
-    using (Html.BeginForm("getEditBooks", "Books", FormMethod.Post))
+    using (Html.BeginForm("getEditBooks", "Books", FormMethod.Post, new { id = "updateForm" }))
     {
         <h2>Edit @Model.BookName</h2>
         <div class="container">
@@ -39,7 +63,7 @@
                 <input type="text" name="BookName" id="Bookname" value="@Model.BookName" autofocus>
                 <br><br>
 
-                <label id="label">
+                <label id="label_numOfBooks">
                     <b>
                         Number Of Books
                     </b>
@@ -85,11 +109,37 @@
                 </label>
                 <input type="text" name="ImageLink" id="ImgLink" value="@Model.ImageLink">
                 <br />
-                <img src="@Model.ImageLink">
+                <br />
+                <img src="@Model.ImageLink" style="height:300px; width:300px;">
                 <br><br>
-                <input type="submit" name="log" id="log" value="Save" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'">
+                <input type="submit" name="log" id="log" value="Save" onclick="return Save()">
                 <br><br>
             </form>
         </div>
+        <script>
+            document.getElementById("log").addEventListener("click", function (event) {
+                event.preventDefault();
+                swal({
+                    title: "Are You Sure You Want To Update?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                    .then((willUpdate) => {
+                        if (willUpdate) {
+                            document.getElementById("updateForm").submit();
+                        } else {
+                            swal("Okay, No Changes Made.");
+                        }
+                    });
+            });
+        </script>
     }
+}
+else
+{
+    <h1>ERROR , YOU ENTERED A WRONG DATA </h1>
+    <p>Make sure that the fields are correctly assigned on your last update </p>
+    <p>For Secuirty You Have To SignIn Again , Bye Bye</p>
+    <button id="log" onclick="location.href='/MainPage/getMainPage'">Sign In Again</button>
 }

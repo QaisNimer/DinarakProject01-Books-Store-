@@ -1,13 +1,36 @@
-﻿@model IEnumerable<DinarakProject01.Models.BookClass>
-@if (ViewBag.getRole != null)
+﻿@model DinarakProject01.ViewModel.ItemsViewModel
+@if (ViewBag.getRole == "Admin")
 {
     <title>Dinarak Books Store</title>
-
     <ul class="right-menu">
-        <li> <input type="text" id="label" name="name" readonly value="Admin : @ViewBag.nameRole"style="font-size:12px; font-weight:bold;" /> </li>
-        <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
+        <li> <input type="text" id="menuLabel" name="name" readonly value="Admin : @ViewBag.nameRole" /> </li>
+        <li>
+            <a id="signOut_id" style="font-weight: bold;">Sign Out</a>
+            <script>
+                document.getElementById("signOut_id").addEventListener("click", function (event) {
+                    event.preventDefault();
+                    swal({
+                        title: "Are You Sure You Want To Sign Out ?",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then(
+                        (willSignOut) => {
+                            if (willSignOut) {
+                                location.href = '/MainPage/getMainPage';
+                            }
+                        }
+                    );
+                });
+            </script>
+        </li>
         <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
         <li><a href=/MainPage/getLogin/@ViewBag.getId style="font-weight: bold;">Users Table</a></li>
+    </ul>
+    <ul class="left-menu">
+        <li>
+            <img src="~/Images/logo.png" alt="Alternate Text" id="logo_nav_id" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'" style="width:111px; height:81px; padding-left:20px;" />
+        </li>
     </ul>
     <h2>Welcome To Our Store</h2>
     using (Html.BeginForm("getBooksTable", "Books", FormMethod.Post))
@@ -20,10 +43,12 @@
                     <td style="border: 1px solid #817049; text-align: center ">The Book</td>
                     <td style="border: 1px solid #817049; text-align: center ">Number Of Books</td>
                     <td style="border: 1px solid #817049; text-align: center ">Price</td>
-                    <td colspan="4" style="border: 1px solid #817049; text-align: center "><input type="button" value="ADD YOUR BOOK" id="AddBookBtn" onclick="location.href='/Books/getCreateBook/@ViewBag.getId'" /> </td>
+                    <td colspan="4" style="border: 1px solid #817049; text-align: center ">
+                        <input type="button" value="ADD YOUR BOOK" id="AddBookBtn" onclick="location.href='/Books/getCreateBook/@ViewBag.getId'" />
+                    </td>
                 </tr>
             </thead>
-            @foreach (var item in Model)
+            @foreach (var item in Model.ItemsBook)
             {
                 <tbody>
                     <tr>
@@ -34,21 +59,82 @@
                         <td style="border: 1px solid #817049; text-align: center ">@item.Price JOD</td>
                         <td><input type="button" value="Edit" id="viewBook" onclick="location.href='/Books/getEditBooks/@item.SerialNumber/@ViewBag.getId'" /> </td>
                         <td><input type="button" value="View" id="viewBook" onclick="location.href='/Books/getView/@item.SerialNumber/@ViewBag.getId'" /> </td>
-                        @*<td><input type="button" value="Buy" id="viewBook" onclick="location.href='/Books/getBuy/@item.SerialNumber/@ViewBag.getId'" /></td>*@
-                        <td><input type="button" value="Delete" id="viewBook" onclick="location.href='/Books/getDelete/@ViewBag.getId/@item.SerialNumber'" /></td>
+                        <td>
+                            <input type="button" value="Delete" data-item-id="@item.SerialNumber" data-get-id="@ViewBag.getId" id="deleteBook" />
+                            <script>
+                                function updateAction(itemId, getId) {
+                                    swal("Are you sure you want to delete?", {
+                                        dangerMode: true,
+                                        buttons: true,
+                                    })
+                                        .then((willDelete) => {
+                                            if (willDelete) {
+                                                swal("Poof! Your record has been deleted!", {
+                                                    icon: "success",
+                                                }).then(() => {
+                                                    window.location.href = "/Books/getDelete/" + itemId + "/" + getId;
+                                                });
+                                            } else {
+                                                swal("Okay, you will not delete this item.");
+                                            }
+                                        });
+                                }
+
+                                document.addEventListener("DOMContentLoaded", function () {
+                                    var deleteButtons = document.querySelectorAll("input[value='Delete']");
+                                    deleteButtons.forEach(function (button) {
+                                        button.addEventListener("click", function () {
+                                            var itemId = this.getAttribute("data-item-id");
+                                            var getId = this.getAttribute("data-get-id");
+                                            updateAction(itemId, getId);
+                                        });
+                                    });
+                                });
+                            </script>
+                        </td>
                     </tr>
                 </tbody>
             }
         </table>
+        <div>
+            @if (Model.CurrentPage > 1)
+            {
+                <a href="@Url.Action("getBooksTable", new { id=ViewBag.getId, page=Model.CurrentPage - 1 })">Previous</a>
+            }
+
+            Page @(Model.CurrentPage) of @(Model.TotalPages)
+
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <a href="@Url.Action("getBooksTable", new { id=ViewBag.getId, page=Model.CurrentPage + 1 })">Next</a>
+            }
+        </div>
     }
 }
-else
+else if (ViewBag.getRole == "User")
 {
-    //var x = ViewBag.nameRole;
     <title>Dinarak Books Store</title>
     <ul class="right-menu">
-        <li> <input type="text" id="label" name="Role" readonly value="User : @ViewBag.nameRole" style="font-size:12px; font-weight:bold;"/> </li>
-        <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
+        <li> <input type="text" id="menuLabel" name="Role" readonly value="@ViewBag.getRole : @ViewBag.nameRole" /> </li>
+        <li>
+            <a id="signOut_id" style="font-weight: bold;">Sign Out</a>
+            <script>
+                document.getElementById("signOut_id").addEventListener("click", function (event) {
+                    event.preventDefault();
+                    swal({
+                        title: "Are You Sure You Want To Sign Out ?",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then(
+                        (willSignOut) => {
+                            if (willSignOut) {
+                                location.href = '/MainPage/getMainPage';
+                            }
+                        }
+                    );
+                });
+            </script>
         <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
     </ul>
 
@@ -63,22 +149,41 @@ else
                     <td style="border: 1px solid #817049; text-align: center ">The Book</td>
                     <td style="border: 1px solid #817049; text-align: center ">Number Of Books</td>
                     <td style="border: 1px solid #817049; text-align: center ">Price</td>
+                    <td colspan="2"> </td>
                 </tr>
             </thead>
-            @foreach (var item in Model)
+
+            @foreach (var item in Model.ItemsBook)
             {
-                <tbody>
-                    <tr>
-                        <td style="border: 1px solid #817049; text-align: center ">@item.SerialNumber</td>
-                        <td style="border: 1px solid #817049; text-align: center ">@item.BookName</td>
-                        <td style="border: 1px solid #817049; text-align: center "> <img src="@item.ImageLink" width="150" height="150" /></td>
-                        <td style="border: 1px solid #817049; text-align: center ">@item.NumOfBooks</td>
-                        <td style="border: 1px solid #817049; text-align: center ">@item.Price</td>
-                        <td><input type="button" value="View" id="viewBook" onclick="location.href='/Books/getView/@item.SerialNumber/@ViewBag.getId'" /> </td>
-                        <td><input type="button" value="Buy" id="viewBook" onclick="location.href='/Books/getBuy/@item.SerialNumber/@ViewBag.getId'" /></td>
-                    </tr>
-                </tbody>
+                
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #817049; text-align: center ">@item.SerialNumber</td>
+                            <td style="border: 1px solid #817049; text-align: center ">@item.BookName</td>
+                            <td style="border: 1px solid #817049; text-align: center "> <img src="@item.ImageLink" width="150" height="150" /></td>
+                            <td style="border: 1px solid #817049; text-align: center ">@item.NumOfBooks</td>
+                            <td style="border: 1px solid #817049; text-align: center ">@item.Price</td>
+                            <td><input type="button" value="View" id="viewBook" onclick="location.href='/Books/getView/@item.SerialNumber/@ViewBag.getId'" /> </td>
+                            <td><input type="button" value="Buy" id="viewBook" onclick="location.href='/Books/getBuy/@item.SerialNumber/@ViewBag.getId'" /></td>
+                        </tr>
+                    </tbody>
+
             }
+
         </table>
+        <div>
+            @if (Model.CurrentPage > 1)
+            {
+                <a href="@Url.Action("getBooksTable", new { id=ViewBag.getId, page=Model.CurrentPage - 1 })">Previous</a>
+            }
+
+            Page @(Model.CurrentPage) of @(Model.TotalPages)
+
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <a href="@Url.Action("getBooksTable", new { id=ViewBag.getId, page=Model.CurrentPage + 1 })">Next</a>
+            }
+        </div>
     }
 }
+

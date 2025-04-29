@@ -2,18 +2,42 @@
 @{
     ViewBag.Title = "getBuy";
 }
-@if (ViewBag.getRole == null)
+@if (ViewBag.getRole == "User")
 {
     <title>Buy Books</title>
     <ul class="left-menu">
         <li>
             <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'"
-               style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
+               style="color: #bc5e1bda; font-size: 30px; outline-color: #817049 "></i>
+        </li>
+        <li>
+            <img src="~/Images/logo.png" alt="Alternate Text" id="logo_nav_id" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'" />
         </li>
     </ul>
     <ul class="right-menu">
-        <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
-        <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
+        <li> <input type="text" id="menuLabel" name="name" readonly value="@ViewBag.getRole : @ViewBag.nameRole" /> </li>
+        <li>
+            <a id="signOut_id" style="font-weight: bold;">Sign Out</a>
+            <script>
+                document.getElementById("signOut_id").addEventListener("click", function (event) {
+                    event.preventDefault();
+                    swal({
+                        title: "Are You Sure You Want To Sign Out ?",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then(
+                        (willSignOut) => {
+                            if (willSignOut) {
+                                location.href = '/MainPage/getMainPage';
+                            }
+                        }
+                    );
+                });
+            </script>
+        <li>
+            <a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a>
+        </li>
     </ul>
     <br />
     <br />
@@ -30,36 +54,48 @@
                 <form id="buyForm">
                     <p>Maximum Number Of Books: @Model.NumOfBooks</p>
                     <input type="number" id="numOfBuyBooks" min="1" max="@Model.NumOfBooks" placeholder="Enter quantity" required />
-                    <input type="button" id="buyBookBtn" value="Order Now">
+                    <input type="button" id="buyBookBtn" value="Order Now" onclick="return func()">
                 </form>
             </div>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script>
-            function func() {
+                function func() {
                     var scope = parseInt(document.getElementById("numOfBuyBooks").value);
-                if (scope <= @Model.NumOfBooks) {
-                    $.ajax({
-                    type: 'POST',
-                    url: '/Books/getBuy/@Model.SerialNumber/@ViewBag.getId',
-                    data: { numOfBooks: scope },
-                    success: function(response) {
-                    window.location.href = '/Books/getBooksTable/@ViewBag.getId';
-                    },
-                    error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    alert("An error occurred while updating the number of books.");
+                    if (scope <= @Model.NumOfBooks) {
+                        swal({
+                            title: "Are You Sure You Want To Buy The Book ?",
+                            icon: "warning",
+                            buttons: ["Cancel", "Yes"],
+                            dangerMode: true,
+                        })
+                        .then((willBuy) => {
+                            if (willBuy) {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/Books/getBuy/@Model.SerialNumber/@ViewBag.getId',
+                                    data: { numOfBooks: scope },
+                                    success: function(response) {
+                                        location.href = '/Books/getBooksTable/@ViewBag.getId';
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error(xhr.responseText);
+                                        alert("An error occurred while updating the number of books.");
+                                    }
+                                });
+                            } else {
+                                swal("You have cancelled the purchase.");
+                            }
+                        });
+                    } else {
+                        swal("You're trying to buy more books than available!");
                     }
-                    });
-                } else {
-                    alert("You're trying to buy more books than available!");
                 }
-            }
-                    document.getElementById('buyBookBtn').addEventListener('click', func);
-            </script>
-        }
-        else
-        {
-            <p>No data available</p>
-        }
-    }
+                document.getElementById('buyBookBtn').addEventListener('click', func);
+                            </script>
+                        }
+                        else
+                        {
+                            <p>No data available</p>
+                        }
+                    }
 }

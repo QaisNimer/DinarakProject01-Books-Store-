@@ -27,5 +27,7 @@ namespace DinarakProject01.Models
         [Required]
         public string DescriptionOfBook { get; set; }
 
+        public ICollection<Comments> Comments { get; set; } /*Relation with Comments.cs [pk & fk]*/
+        //public List<Comments> Commentss { get; set; }
     }
 }

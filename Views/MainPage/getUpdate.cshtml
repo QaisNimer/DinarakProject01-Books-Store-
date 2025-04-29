@@ -1,46 +1,99 @@
 ﻿@model DinarakProject01.Models.DinarakClass
 <title>Update Data</title>
-<ul class="left-menu">
-    <li>
-        <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/MainPage/getLogin'"
-           style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
-    </li>
-</ul>
-<ul class="right-menu">
-    <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
-    <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
-</ul>
-<h2>UPDATE DATA </h2>
-<br />
-<br />
-@using (Html.BeginForm("getUpdate", "MainPage", FormMethod.Post))
+
+@if (ViewBag.getRole == "Admin")
 {
-    <div class="container">
-        <form id="creat">
-            <label id="label">
-                <b>
-                    Full Name
-                </b>
-            </label>
-            <input type="text" name="UserName" id="Uname" placeholder="Your Name" required autofocus>
-            <br><br>
-            <label id="label">
-                <b>
-                    Password
-                </b>
-            </label>
-            <input type="Password" name="Password" id="Pass" placeholder="Hard Pass Only" minlength="7" maxlength="14" required>
-            <br><br>
-            <input type="submit" name="log " id="log" value="Update" onclick="location.href='/MainPage/getLogin'">
-        </form>
-    </div>
-}
-@if (ViewBag.updateMessage != null)
-{
-    <script type="text/javascript">
-            window.onload = function () {
-                alert("@ViewBag.updateMessage");
-            };
+    <ul class="left-menu">
+        <li>
+            <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/MainPage/getLogin/@ViewBag.getId'"
+               style="color: #bc5e1bda; font-size: 30px; outline-color: #817049 "></i>
+        </li>
+        <li>
+            <img src="~/Images/logo.png" alt="Alternate Text" id="logo_nav_id" onclick="location.href='/MainPage/getMainPage'" />
+        </li>
+    </ul>
+    <ul class="right-menu">
+        <li> <input type="text" id="menuLabel" name="name" readonly value="Admin : @ViewBag.nameRole" /> </li>
+        <li>
+            <a id="signOut_id" style="font-weight: bold;">Sign Out</a>
+            <script>
+                document.getElementById("signOut_id").addEventListener("click", function (event) {
+                    event.preventDefault();
+                    swal({
+                        title: "Are You Sure You Want To Sign Out ?",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then(
+                        (willSignOut) => {
+                            if (willSignOut) {
+                                location.href = '/MainPage/getMainPage';
+                            }
+                        }
+                    );
+                });
+            </script>
+        </li>
+        <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
+    </ul>
+    <h2>UPDATE DATA </h2>
+    <br />
+    <br />
+    using (Html.BeginForm("getUpdate", "MainPage", FormMethod.Post, new { id = "updateForm" }))
+    {
+        <div class="container">
+            <form id="creat">
+                <label id="label">
+                    <b> Role </b>
+                </label>
+                <select name="Role" id="Role">
+                    @if (Model.Role == "User")
+                    {
+                        <option value="@Model.Role" title="User">@Model.Role</option>
+                        <option value="Admin" title="Admin">Admin</option>
+                    }
+                    else if (Model.Role == "Admin")
+                    {
+                        <option value="@Model.Role" title="Admin">@Model.Role</option>
+                        <option value="User" title="Admin">User</option>
+                    }
+                </select>
+                <br>
+                <br>
+                <label id="label">
+                    <b> Full Name </b>
+                </label>
+                <input type="text" name="UserName" id="Uname" value="@Model.UserName" readonly>
+                <br>
+                <br>
+                <label id="label">
+                    <b> Password </b>
+                </label>
+                <input type="Password" name="Password" id="Pass" value="@Model.Password" readonly>
+                <br>
+                <br>
+                <input type="submit" name="log" id="log" value="Update">
+            </form>
+        </div>
+    }
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        document.getElementById("log").addEventListener("click", function (event) {
+            event.preventDefault();
+            swal({
+                title: "Are You Sure You Want To Update?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+                .then((willUpdate) => {
+                    if (willUpdate) {
+                        document.getElementById("updateForm").submit();
+                    } else {
+                        swal("Okay, No Changes Made.");
+                    }
+                });
+        });
     </script>
 }
-

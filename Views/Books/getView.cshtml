@@ -1,47 +1,83 @@
 ﻿@model DinarakProject01.Models.BookClass
-@if (ViewBag.getRole != null)
+@if (ViewBag.getRole == "Admin")
 {
     <ul class="left-menu">
         <li>
             <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'"
-               style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
+               style="color: #bc5e1bda; font-size: 30px; outline-color: #817049 "></i>
+        </li>
+        <li>
+            <img src="~/Images/logo.png" alt="Alternate Text" id="logo_nav_id" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'" />
         </li>
     </ul>
     <ul class="right-menu">
-        <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
-        <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
+        <li> <input type="text" id="menuLabel" name="name" readonly value="@ViewBag.getRole : @ViewBag.nameRole" /> </li>
+        <li>
+            <a id="signOut_id" style="font-weight: bold;">Sign Out</a>
+            <script>
+                document.getElementById("signOut_id").addEventListener("click", function (event) {
+                    event.preventDefault();
+                    swal({
+                        title: "Are You Sure You Want To Sign Out ?",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then(
+                        (willSignOut) => {
+                            if (willSignOut) {
+                                location.href = '/MainPage/getMainPage';
+                            }
+                        }
+                    );
+                });
+            </script>
+        <li>
+            <a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a>
+        </li>
     </ul>
     if (Model != null)
     {
+
         <div>
             <h2>Details about @Model.BookName</h2>
             <img src="@Model.ImageLink" width="300" height="300" />
             <p><strong>Author :</strong> @Model.Author</p>
             <p> <strong>Genres:</strong> @Model.TypeOfBook</p>
             <p><strong>Description:</strong> @Model.DescriptionOfBook</p>
+            <p></p>
+            <div>
+                <input type="button" value="Give a Feedback" onclick="location.href='@Url.Action("ShowComment", new { id = Model.SerialNumber, id2 = ViewBag.getId })';" />
+            </div>
         </div>
-    }
+        }
 }
-else
+else if (ViewBag.getRole == "User")
 {
-    <ul class="left-menu">
-        <li>
-            <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'"
-               style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
-        </li>
-    </ul>
-    <ul class="right-menu">
-        <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
-        <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
-    </ul>
+<ul class="left-menu">
+    <li>
+        <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'"
+           style="color: #bc5e1bda; font-size: 30px; outline-color: #817049 "></i>
+
+    <li>
+        <img src="~/Images/logo.png" alt="Alternate Text" id="logo_nav_id" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'" />
+    </li>
+</ul>
+<ul class="right-menu">
+    <li> <input type="text" id="menuLabel" name="name" readonly value="@ViewBag.getRole : @ViewBag.nameRole" /> </li>
+    <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
+    <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
+</ul>
     if (Model != null)
     {
-        <div>
-            <h2>Details about @Model.BookName</h2>
-            <img src="@Model.ImageLink" width="300" height="300" />
-            <p><strong>Author :</strong> @Model.Author</p>
-            <p> <strong>Genres:</strong> @Model.TypeOfBook</p>
-            <p><strong>Description:</strong> @Model.DescriptionOfBook</p>
-        </div>
+<div>
+    <h2>Details about @Model.BookName</h2>
+    <img src="@Model.ImageLink" width="300" height="300" />
+    <p><strong>Author :</strong> @Model.Author</p>
+    <p> <strong>Genres:</strong> @Model.TypeOfBook</p>
+    <p><strong>Description:</strong> @Model.DescriptionOfBook</p>
+    <div>
+        <input type="button" value="Give a FeedBack"  onclick="location.href='@Url.Action("ShowComment", new { id = Model.SerialNumber, id2 = ViewBag.getId })';">
+    </div>
+</div>
     }
 }

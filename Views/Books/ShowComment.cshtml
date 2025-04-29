@@ -1,0 +1,503 @@
+﻿@*@model IEnumerable<DinarakProject01.Models.Comments>
+    <style>
+        #txtArtComm {
+            text-align: left;
+            text-indent: 5px;
+            background-color: white;
+            color: black;
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        .half-star {
+            position: relative;
+            display: inline-block;
+        }
+
+            .half-star::before {
+                content: '★';
+                color: gray; /* color for the empty part */
+                position: absolute;
+                left: 0;
+                width: 50%;
+                overflow: hidden;
+            }
+
+            .half-star::after {
+                content: '★';
+                color: yellow; /* color for the filled part */
+                position: absolute;
+                left: 0;
+                width: 50%;
+                overflow: hidden;
+            }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript">
+        function ratingOut(rating) {
+            for (var i = 1; i <= rating; i++) {
+                var element = document.getElementById("s" + i);
+                if (element) {
+                    element.className = "text-gray-300"; // Set the class name
+                }
+            }
+        }
+
+        function ratingOver(rating) {
+            for (var i = 1; i <= rating; i++) {
+                var element = document.querySelector("#s" + i);
+                if (element) {
+                    element.className = "text-yellow-500"; // Set the class name
+                }
+            }
+        }
+
+        //function ratingClick(rating) {
+        //    var calc = 0;
+        //    for (var i = 1; i <= rating; i++) {
+        //        var element = document.querySelector("#s" + i);
+        //        if (element) {
+        //            element.className = "text-yellow-500"; // Set the class name
+        //            function math() {
+        //                var selected = i;
+        //                calc += selected;
+        //            }
+
+        //        }
+        //    }
+        //    for (var i = rating + 1; i <= 5; i++) {
+        //        var element = document.getElementById("s" + i);
+        //        if (element) {
+        //            element.className = "text-gray-300"; // Set the class name
+        //        }
+        //    }
+        //    var rating = document.getElementById("lblRating").value;
+        //}
+        function ratingClick(rating) {
+            var calc = 0;
+            for (var i = 1; i <= rating; i++) {
+                var element = document.querySelector("#s" + i);
+                if (element) {
+                    element.className = "text-yellow-500"; // Set the class name
+                    function math() {
+                        var selected = i;
+                        calc += selected;
+                    }
+                }
+            }
+            for (var i = rating + 1; i <= 5; i++) {
+                var element = document.getElementById("s" + i);
+                if (element) {
+                    element.className = "text-gray-300"; // Set the class name
+                }
+            }
+            $("#lblRating").val(rating);
+        }
+
+        function selectedRate() {
+            var rating = document.getElementById("lblRating").value;
+            for (var i = 1; i <= rating; i++) {
+                var element = document.querySelector("#s" + i);
+                if (element) {
+                    element.className = "text-yellow-500"; // Set the class name
+                }
+            }
+        }
+
+        function VerifyRating() {
+            var rating = document.getElementById("lblRating").value;
+            if (rating === "0" || rating === "") {
+                alert("Enter Rating");
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+    <ul class="left-menu">
+        <li>
+            <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'"
+               style="color: #bc5e1bda; font-size: 30px; outline-color: #817049 "></i>
+        </li>
+        <li>
+            <img src="~/Images/logo.png" alt="Alternate Text" id="logo_nav_id" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'" />
+        </li>
+    </ul>
+    <ul class="right-menu">
+        <li> <input type="text" id="menuLabel" name="name" readonly value="@ViewBag.getRole : @ViewBag.nameRole" /> </li>
+        <li>
+            <a id="signOut_id" style="font-weight: bold;">Sign Out</a>
+            <script>
+                document.getElementById("signOut_id").addEventListener("click", function (event) {
+                    event.preventDefault();
+                    swal({
+                        title: "Are You Sure You Want To Sign Out ?",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then(
+                        (willSignOut) => {
+                            if (willSignOut) {
+                                location.href = '/MainPage/getMainPage';
+                            }
+                        }
+                    );
+                });
+            </script>
+        <li>
+            <a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a>
+        </li>
+    </ul>
+    <br />
+    <br />
+    <h4>Add Your Feedback On @ViewBag.bookName </h4>
+    @using (Html.BeginForm("AddComment", "Books", FormMethod.Post, new { onsubmit = "return VerifyRating()" }))
+    {
+        <textarea rows="6" cols="70" name="bookCommnet" id="txtArtComm"></textarea>
+        <div onmouseout="selectedRate()" class="text-4xl">
+            <span id="s1" onmouseout="ratingOut(1)" onmouseover="ratingOver(1)" onclick="ratingClick(1)" class="text-gray-300">☆</span>
+            <span id="s2" onmouseout="ratingOut(2)" onmouseover="ratingOver(2)" onclick="ratingClick(2)" class="text-gray-300">☆</span>
+            <span id="s3" onmouseout="ratingOut(3)" onmouseover="ratingOver(3)" onclick="ratingClick(3)" class="text-gray-300">☆</span>
+            <span id="s4" onmouseout="ratingOut(4)" onmouseover="ratingOver(4)" onclick="ratingClick(4)" class="text-gray-300">☆</span>
+            <span id="s5" onmouseout="ratingOut(5)" onmouseover="ratingOver(5)" onclick="ratingClick(5)" class="text-gray-300">☆</span>
+        </div>
+        <div>
+            <input type="hidden" name="rating" id="lblRating" value="0" />
+        </div>
+
+        <div>
+            <input type="hidden" name="id2Val" id="lblRating" value=@ViewBag.getId />
+        </div>
+
+        <div>
+            <input type="hidden" name="SerialNumber" id="lblRating" value=" @ViewBag.bookId" />
+        </div>
+        <br />
+        <div>
+            <input type="submit" class="submit_feedback_btn" name="SaveComment" value="Save Feedback" />
+        </div>
+    }
+
+    <h2>ShowComment</h2>
+    <table id="table">
+        <thead>
+            @{
+                var ratings = Model.Select(i => i.Rating).ToList();
+                var avgRating = ratings.Any() ? ratings.Average() : 0;
+                var numVotes = ratings.Count();
+
+                Func<double, string> getStars = (rating) =>
+                {
+                    var fullStars = (int)rating;
+                    var halfStar = rating - fullStars >= 0.5 ? 1 : 0;
+                    var emptyStars = 5 - fullStars - halfStar;
+                    var starsHtml = new System.Text.StringBuilder();
+                    for (var i = 0; i < fullStars; i++)
+                    {
+                        starsHtml.Append("<span class='text-yellow-500'>★</span>");
+                    }
+                    if (halfStar == 1)
+                    {
+                        starsHtml.Append("<span class='text-yellow-500'>½</span>");
+                        //starsHtml.Append("<span class='text-yellow-500'>⯪</span>");
+                    }
+                    for (var i = 0; i < emptyStars; i++)
+                    {
+                        starsHtml.Append("<span class='text-gray-300'>☆</span>");
+                    }
+                    return starsHtml.ToString();
+                };
+            }
+            <tr>
+                <th colspan="3">Avg of ratings: @Html.Raw(getStars(avgRating)) | Total of ratings : @Model.Sum(i => i.Rating) | Number of votes: @numVotes</th>
+            </tr>
+        </thead>
+
+        <tr>
+            <th>Date</th>
+            <th>Feedback</th>
+            <th>Rating</th>
+        </tr>
+        <tr>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @item.CommentedOn.ToString(format: "g")
+                </td>
+                <td>
+                    @item.CommentDescription
+                </td>
+                <td>
+                    @for (int i = 0; i < item.Rating; i++)
+                    {
+                        <span class="text-yellow-500">
+                            ★
+                        </span>
+                    }
+                    @for (int i = item.Rating; i < 5; i++)
+                    {
+                        <span class="text-grey-300">
+                            ☆
+                        </span>
+                    }
+                </td>
+            </tr>
+        }
+        </table>*@
+
+@model IEnumerable<DinarakProject01.Models.Comments>
+<style>
+    #txtArtComm {
+        text-align: left;
+        text-indent: 5px;
+        background-color: white;
+        color: black;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    .half-star {
+        position: relative;
+        display: inline-block;
+    }
+
+        .half-star::before {
+            content: '★';
+            color: gray; /* color for the empty part */
+            position: absolute;
+            left: 0;
+            width: 50%;
+            overflow: hidden;
+        }
+
+        .half-star::after {
+            content: '★';
+            color: yellow; /* color for the filled part */
+            position: absolute;
+            left: 0;
+            width: 50%;
+            overflow: hidden;
+        }
+</style>
+<script src="https://cdn.tailwindcss.com"></script>
+<script type="text/javascript">
+    function ratingOut(rating) {
+        for (var i = 1; i <= rating; i++) {
+            var element = document.getElementById("s" + i);
+            if (element) {
+                element.className = "text-gray-300"; // Set the class name
+            }
+        }
+    }
+
+    function ratingOver(rating) {
+        for (var i = 1; i <= rating; i++) {
+            var element = document.querySelector("#s" + i);
+            if (element) {
+                element.className = "text-yellow-500"; // Set the class name
+            }
+        }
+    }
+
+    function ratingClick(rating) {
+        var calc = 0;
+        for (var i = 1; i <= rating; i++) {
+            var element = document.querySelector("#s" + i);
+            if (element) {
+                element.className = "text-yellow-500"; // Set the class name
+                function math() {
+                    var selected = i;
+                    calc += selected;
+                }
+
+            }
+        }
+        for (var i = rating + 1; i <= 5; i++) {
+            var element = document.getElementById("s" + i);
+            if (element) {
+                element.className = "text-gray-300"; // Set the class name
+            }
+        }
+        $("#lblRating").val(rating);
+    }
+
+    function selectedRate() {
+        var rating = document.getElementById("lblRating").value;
+        for (var i = 1; i <= rating; i++) {
+            var element = document.querySelector("#s" + i);
+            if (element) {
+                element.className = "text-yellow-500"; // Set the class name
+            }
+        }
+    }
+
+    function VerifyRating() {
+        var rating = document.getElementById("lblRating").value;
+        if (rating === "0" || rating === "") {
+            alert("Enter Rating");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+<ul class="left-menu">
+    <li>
+        <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'"
+           style="color: #bc5e1bda; font-size: 30px; outline-color: #817049 "></i>
+    </li>
+    <li>
+        <img src="~/Images/logo.png" alt="Alternate Text" id="logo_nav_id" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'" />
+    </li>
+</ul>
+<ul class="right-menu">
+    <li> <input type="text" id="menuLabel" name="name" readonly value="@ViewBag.getRole : @ViewBag.nameRole" /> </li>
+    <li>
+        <a id="signOut_id" style="font-weight: bold;">Sign Out</a>
+        <script>
+            document.getElementById("signOut_id").addEventListener("click", function (event) {
+                event.preventDefault();
+                swal({
+                    title: "Are You Sure You Want To Sign Out ?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then(
+                    (willSignOut) => {
+                        if (willSignOut) {
+                            location.href = '/MainPage/getMainPage';
+                        }
+                    }
+                );
+            });
+        </script>
+    <li>
+        <a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a>
+    </li>
+</ul>
+<br />
+<br />
+<h4>Add Your Feedback On @ViewBag.bookName </h4>
+@using (Html.BeginForm("AddComment", "Books", FormMethod.Post, new { onsubmit = "return VerifyRating()" }))
+{
+    <textarea rows="6" cols="70" name="bookCommnet" id="txtArtComm"></textarea>
+    <div onmouseout="selectedRate()" class="text-4xl">
+        <span id="s1" onmouseout="ratingOut(1)" onmouseover="ratingOver(1)" onclick="ratingClick(1)" class="text-gray-300">☆</span>
+        <span id="s2" onmouseout="ratingOut(2)" onmouseover="ratingOver(2)" onclick="ratingClick(2)" class="text-gray-300">☆</span>
+        <span id="s3" onmouseout="ratingOut(3)" onmouseover="ratingOver(3)" onclick="ratingClick(3)" class="text-gray-300">☆</span>
+        <span id="s4" onmouseout="ratingOut(4)" onmouseover="ratingOver(4)" onclick="ratingClick(4)" class="text-gray-300">☆</span>
+        <span id="s5" onmouseout="ratingOut(5)" onmouseover="ratingOver(5)" onclick="ratingClick(5)" class="text-gray-300">☆</span>
+    </div>
+    <div>
+        <input type="hidden" name="rating" id="lblRating" value="0" />
+    </div>
+
+    <div>
+        <input type="hidden" name="id2Val" id="lblRating" value=@ViewBag.getId />
+    </div>
+
+    <div>
+        <input type="hidden" name="SerialNumber" id="lblRatingo" value=" @ViewBag.bookId" />
+    </div>
+    <br />
+    <div>
+        <input type="submit" class="submit_feedback_btn" name="SaveComment" value="Save Feedback" />
+    </div>
+}
+
+<h2>ShowComment</h2>
+<table id="table">
+    <thead>
+        @{
+            var ratings = Model.Select(i => i.Rating).ToList();
+            var avgRating = ratings.Any() ? ratings.Average() : 0;
+            var numVotes = ratings.Count();
+
+            Func<double, string> getStars = (rating) =>
+            {
+                var fullStars = (int)rating;
+                var halfStar = rating - fullStars >= 0.5 ? 1 : 0;
+                var emptyStars = 5 - fullStars - halfStar;
+                var starsHtml = new System.Text.StringBuilder();
+                for (var i = 0; i < fullStars; i++)
+                {
+                    starsHtml.Append("<span class='text-yellow-500'>★</span>");
+                }
+                if (halfStar == 1)
+                {
+                    starsHtml.Append("<span class='text-yellow-500'>½</span>");
+                    //starsHtml.Append("<span class='text-yellow-500'>⯪</span>");
+                }
+                for (var i = 0; i < emptyStars; i++)
+                {
+                    starsHtml.Append("<span class='text-gray-300'>☆</span>");
+                }
+                return starsHtml.ToString();
+            };
+        }
+        <tr>
+            <th colspan="3">Avg of ratings: @Html.Raw(getStars(avgRating)) | Total of ratings : @Model.Sum(i => i.Rating) | Number of votes: @numVotes</th>
+        </tr>
+    </thead>
+
+    <tr>
+        <th>Date</th>
+        <th>Feedback</th>
+        <th>Rating</th>
+    </tr>
+    <tr>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @item.CommentedOn.ToString(format: "g")
+            </td>
+            <td>
+                @item.CommentDescription
+            </td>
+            <td>
+                @for (int i = 0; i < item.Rating; i++)
+                {
+                    <span class="text-yellow-500">
+                        ★
+                    </span>
+                }
+                @for (int i = item.Rating; i < 5; i++)
+                {
+                    <span class="text-grey-300">
+                        ☆
+                    </span>
+                }
+            </td>
+        </tr>
+    }
+    </table>

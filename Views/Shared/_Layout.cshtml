@@ -4,37 +4,52 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
           integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+    @*<script src="https://cdn.tailwindcss.com"></script>*@
 
     <style>
         body {
-            background-color: rosybrown;
-            color: black;
+            background-color: antiquewhite;
+            color: #800000;
         }
 
         h2 {
-            font-family: "Press Start 2P",Consolas;
-            color: #EF2D56;
+            font-family: "Nunito Sans","Press Start 2P";
+            color: #800000;
             text-align: center;
             padding: 20px;
         }
 
         h4 {
             font-family: "Press Start 2P",Consolas;
-            font-size:15px;
-            color: #EF2D56;
-            margin:20px 0;
-/*            padding: 20px;
-*/        }
+            font-size: 15px;
+            color: #800000;
+            margin: 20px 0;
+            /*            padding: 20px;
+        */
+        }
 
         .container {
             width: 50%;
             margin: 0 auto;
             text-align: center;
+        }
+
+        #logo_id {
+            height: 166px;
+        }
+
+        #logo_nav_id {
+            height: 70px;
+            width: 90px;
         }
 
         #label {
@@ -46,7 +61,7 @@
             padding: 0.95rem 0.5rem;
             font-style: normal;
             text-transform: uppercase;
-            color: #FFFFFF;
+            color: #800000;
             background-color: #EF2D56;
             border-radius: 0rem;
             -webkit-border-radius: 0rem;
@@ -56,13 +71,92 @@
             border-color: #EF2D56;
             -webkit-box-shadow: inset 32px -8px 0px -16px rgba(51,51,51,1);
             -moz-box-shadow: inset 32px -8px 0px -16px rgba(51,51,51,1);
-            /* Ensure all labels have the same width */
-            width: 140px; /* Adjust this width according to your design */
+            width: 140px;
             display: inline-block;
         }
 
+        #label_numOfBooks {
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-right: 5px;
+            letter-spacing: 0.025rem;
+            padding: 0.95rem 0.5rem;
+            font-style: normal;
+            text-transform: uppercase;
+            color: #800000;
+            background-color: #bc5e1bda;
+            border-radius: 0rem;
+            -webkit-border-radius: 0rem;
+            -moz-border-radius: 0rem;
+            border-style: none;
+            border-width: 0rem;
+            border-color: #EF2D56;
+            -webkit-box-shadow: inset 32px -8px 0px -16px rgba(51,51,51,1);
+            -moz-box-shadow: inset 32px -8px 0px -16px rgba(51,51,51,1);
+            width: 140px;
+            display: inline-block;
+        }
+
+        #menuLabel {
+            font-weight: bold;
+            letter-spacing: 0.025rem;
+            padding: 0.89rem 0.05rem;
+            font-style: normal;
+            text-transform: uppercase;
+            color: #800000;
+            background-color: #faebd7;
+            border-color: #EF2D56;
+            width: 140px;
+            display: inline-block;
+            border-style: none;
+        }
 
         #Uname {
+            padding: 6px 12px;
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+        }
+
+        #Role {
+            padding: 6px 12px;
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+        }
+
+        #Export {
+            padding: 6px 12px;
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+        }
+
+        input::file-selector-button {
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            background-color: rgb(31, 32, 35);
+            padding: 0.5em;
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            height: 30px;
+            appearance: none;
+        }
+
+        #Import {
             padding: 6px 12px;
             background: rgb(31, 32, 35);
             border: 1px solid rgb(60, 63, 68);
@@ -125,7 +219,9 @@
             font-size: 13px;
             color: rgb(247, 248, 248);
             height: 30px;
+            padding: 6px 12px;
             appearance: none;
+            width: 148px;
         }
 
         #numOfBuyBooks {
@@ -200,7 +296,7 @@
             letter-spacing: 0.025rem;
             font-style: normal;
             text-transform: uppercase;
-            color: #f2093a;
+            color: #bc5e1bda;
             background-color: rgb(60, 63, 68);
             border-radius: 1.25rem;
             -webkit-border-radius: 1.25rem;
@@ -208,7 +304,7 @@
             padding: 0.35rem 0.75rem;
             border-style: ridge;
             border-width: 0.125rem;
-            border-color: #EF2D56;
+            border-color: #bc5e1bda;
         }
 
         #viewBook {
@@ -218,7 +314,7 @@
             letter-spacing: 0.025rem;
             font-style: normal;
             text-transform: uppercase;
-            color: #f2093a;
+            color: #bc5e1bda;
             background-color: rgb(60, 63, 68);
             border-radius: 1.25rem;
             -webkit-border-radius: 1.25rem;
@@ -226,7 +322,25 @@
             padding: 0.35rem 0.75rem;
             border-style: ridge;
             border-width: 0.125rem;
-            border-color: #EF2D56;
+            border-color: #bc5e1bda;
+        }
+
+        #viewBook_Id {
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 0.025rem;
+            font-style: normal;
+            text-transform: uppercase;
+            color: #bc5e1bda;
+            background-color: rgb(60, 63, 68);
+            border-radius: 1.25rem;
+            -webkit-border-radius: 1.25rem;
+            -moz-border-radius: 1.25rem;
+            padding: 0.35rem 0.75rem;
+            border-style: ridge;
+            border-width: 0.125rem;
+            border-color: #bc5e1bda;
         }
 
         #buyBookBtn {
@@ -236,7 +350,7 @@
             letter-spacing: 0.025rem;
             font-style: normal;
             text-transform: uppercase;
-            color: #f2093a;
+            color: #bc5e1bda;
             background-color: rgb(60, 63, 68);
             border-radius: 1.25rem;
             -webkit-border-radius: 1.25rem;
@@ -244,15 +358,15 @@
             padding: 0.35rem 0.75rem;
             border-style: ridge;
             border-width: 0.125rem;
-            border-color: #EF2D56;
+            border-color: #bc5e1bda;
         }
 
         #AddBookBtn {
             background-color: #333333;
             border: none;
             border-style: ridge;
-            border-color: #EF2D56;
-            color: #EF2D56;
+            border-color: #bc5e1bda;
+            color: #bc5e1bda;
             padding: 15px 32px;
             text-align: center;
             text-decoration: none;
@@ -260,6 +374,24 @@
             font-size: 16px;
             margin: 4px 2px;
             cursor: pointer;
+        }
+
+        #deleteBook {
+            font-family: 'Heebo', sans-serif;
+            font-size: 0.75rem;
+            font-weight: bold;
+            letter-spacing: 0.025rem;
+            font-style: normal;
+            text-transform: uppercase;
+            color: #bc5e1bda;
+            background-color: rgb(60, 63, 68);
+            border-radius: 1.25rem;
+            -webkit-border-radius: 1.25rem;
+            -moz-border-radius: 1.25rem;
+            padding: 0.35rem 0.75rem;
+            border-style: ridge;
+            border-width: 0.125rem;
+            border-color: #bc5e1bda;
         }
 
         .styled-table {
@@ -275,7 +407,7 @@
 
             .styled-table thead tr {
                 background-color: #333;
-                color: #ffffff;
+                color: white;
                 text-align: left;
             }
 
@@ -285,11 +417,13 @@
             }
 
             .styled-table tbody tr {
-                background-color: #EF2D56;
+                background-color: #bc5e1bda;
             }
 
         ul.left-menu {
             list-style-type: none;
+            width: 185px;
+            height: 58px;
             margin: 0;
             padding: 0;
             position: fixed;
@@ -316,7 +450,6 @@
             position: relative; /* Ensure positioning context */
         }
 
-
         ul.right-menu li {
             float: right;
         }
@@ -324,7 +457,7 @@
         ul.left-menu li i {
             display: block;
             padding: 14px 16px;
-            color: #ef2d56;
+            color: #bc5e1bda;
             font-size: 30px;
         }
 
@@ -341,18 +474,16 @@
         }
 
         ul li a:hover {
-            background-color: #EF2D56;
+            background-color: #bc5e1bda;
             color: #333;
         }
 
-
-
         ul {
             /*list-style-type: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: black;*/
+                    margin: 0;
+                    padding: 0;
+                    overflow: hidden;
+                    background-color: black;*/
             list-style-type: none;
             margin: 0;
             padding: 0;
@@ -381,75 +512,84 @@
 
             li a {
                 display: block;
-                color: white;
+                color: #bc5e1bda;
                 text-align: center;
                 padding: 14px 16px;
                 text-decoration: none;
             }
 
                 li a:hover {
-                    background-color: #EF2D56;
-                    color: #333;
+                    background-color: #bc5e1bda;
+                    color: #800000;
                 }
 
-
-
         #validation-box {
-        display:none;
-        background-color:black;
-        color:white;
-        position:relative;
-        padding:10px;
-        margin-top:4px;
-        text-align:left;
+            display: none;
+            background-color: #bc5e1bda;
+            color: #800000;
+            position: relative;
+            padding: 10px;
+            margin-top: 4px;
+            text-align: left;
         }
 
-        #validation-box p{
-            font-size:14px;
-        }
+            #validation-box p {
+                font-size: 14px;
+            }
 
         .valid {
-            color: #2fbf71;
+            color: #bc5e1bda;
         }
+
             .valid:before {
                 position: relative;
                 left: -8px;
-               /* content: url(../../Images/tick.png);*/
+                /* content: url(../../Images/tick.png);*/
                 top: 3px;
-                width: 5px; 
+                width: 5px;
                 height: 5px;
             }
 
         .invalid {
-         color:white;
+            color: #800000;
         }
+
             .invalid:before {
                 position: relative;
                 left: -8px;
                 /*content: url(../../Images/false.jpg);*/
                 top: 3px;
-                
             }
 
+        .submit_feedback_btn {
+            padding: 0px 12px;
+            background: rgb(31, 32, 35);
+            border: 1px solid rgb(60, 63, 68);
+            border-radius: 4px;
+            font-size: 13px;
+            color: rgb(247, 248, 248);
+            height: 30px;
+            appearance: none;
+        }
+
     </style>
-    
 </head>
 <body>
     @*<ul>
-        <li><a href="/MainPage/getMainPage">SignOut</a></li>
-        <li><a href="mailto:qaisihabnimer@gmail.com">Contact</a></li>
-    </ul>*@
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - Made By : Qais Nimer</p>
-            </footer>
-        </div>
+            <li><a href="/MainPage/getMainPage">SignOut</a></li>
+            <li><a href="mailto:qaisihabnimer@gmail.com">Contact</a></li>
+        </ul>*@
+    <div class="container body-content">
+        @RenderBody()
+        <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Made By : Qais Nimer</p>
+        </footer>
+    </div>
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 
 </body>
 </html>

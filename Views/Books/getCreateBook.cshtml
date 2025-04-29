@@ -2,82 +2,116 @@
 @{
     ViewBag.Title = "getCreateBook";
 }
-<title>Create Books</title>
-@if (ViewBag.getRole != null)
-{
-    <ul class="left-menu">
-        <li>
-            <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'"
-               style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
-        </li>
-    </ul>
-    <ul class="right-menu">
-        <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
-        <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
-    </ul>
-    using (Html.BeginForm("getCreateBook", "Books", FormMethod.Post, new { id = @ViewBag.getId }))
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Books</title>
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body>
+    @if (ViewBag.getRole == "Admin")
     {
-        <h2>Create Your Own Book</h2>
-        <div class="container">
-            <form id="creat">
+        <ul class="left-menu">
+            <li>
+                <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'"
+                   style="color: #bc5e1bda; font-size: 30px; outline-color: #817049 "></i>
+            </li>
+            <li>
+                <img src="~/Images/logo.png" alt="Alternate Text" id="logo_nav_id" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'" />
+            </li>
+        </ul>
+        <ul class="right-menu">
+            <li>
+                <input type="text" id="menuLabel" name="name" readonly value="@ViewBag.getRole : @ViewBag.nameRole" />
+            </li>
+            <li>
+                <a id="signOut_id" style="font-weight: bold;">Sign Out</a>
+                <script>
+                    document.getElementById("signOut_id").addEventListener("click", function (event) {
+                        event.preventDefault();
+                        swal({
+                            title: "Are You Sure You Want To Sign Out?",
+                            icon: "warning",
+                            buttons: true,
+                            dangerMode: true,
+                        }).then((willSignOut) => {
+                            if (willSignOut) {
+                                location.href = '/MainPage/getMainPage';
+                            }
+                        });
+                    });
+                </script>
+            </li>
+            <li>
+                <a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a>
+            </li>
+        </ul>
+        <form action="@Url.Action("getCreateBook", "Books", new { id = @ViewBag.getId })" method="post" class="createForm">
+            <h2>Create Your Own Book</h2>
+            <div class="container">
                 <label id="label">
-                    <b>
-                        Book Name
-                    </b>
+                    <b>Book Name</b>
                 </label>
                 <input type="text" name="BookName" id="Bookname" placeholder="Book Name" required autofocus>
                 <br><br>
 
                 <label id="label">
-                    <b>
-                        Number Of Books
-                    </b>
+                    <b>Number Of Books</b>
                 </label>
                 <input type="text" id="NumberBooks" name="NumOfBooks" placeholder="Num Of Books" required autofocus>
                 <br><br>
 
                 <label id="label">
-                    <b>
-                        Description
-                    </b>
+                    <b>Description</b>
                 </label>
-                <input type="text" name="DescriptionOfBook" id="DescripOfBook" placeholder="Short Descriotion" required>
+                <input type="text" name="DescriptionOfBook" id="DescripOfBook" placeholder="Short Description" required>
                 <br><br>
 
                 <label id="label">
-                    <b>
-                        Geners
-                    </b>
+                    <b>Genres</b>
                 </label>
                 <input type="text" name="TypeOfBook" id="TypeBook" placeholder="Action/Drama/Romance" required>
                 <br><br>
 
                 <label id="label">
-                    <b>
-                        Price
-                    </b>
+                    <b>Price</b>
                 </label>
                 <input type="text" name="Price" id="PriceOfBook" placeholder="100" required>
                 <br><br>
 
                 <label id="label">
-                    <b>
-                        Author
-                    </b>
+                    <b>Author</b>
                 </label>
                 <input type="text" name="Author" id="AuthorOfBook" placeholder="William Shakespeare" required>
                 <br><br>
+
                 <label id="label">
-                    <b>
-                        Image URL
-                    </b>
+                    <b>Image URL</b>
                 </label>
                 <input type="text" name="ImageLink" id="ImgLink" placeholder="Link From Website" required>
                 <br><br>
-                <input type="submit" name="log" id="log" value="CREATE" onclick="location.href='/Books/getBooksTable/@ViewBag.getId'">
-                <br><br>
-            </form>
-        </div>
-    }
 
-}
+                <input type="submit" name="log" id="log" value="CREATE">
+            </div>
+        </form>
+        <script>
+            document.getElementById("log").addEventListener("click", function (event) {
+                event.preventDefault();
+                swal({
+                    title: "Are You Sure You Want To Create This Book?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willCreate) => {
+                    if (willCreate) {
+                        document.querySelector(".createForm").submit();
+                    } else {
+                        swal("Okay, I Won't Create A Book.");
+                    }
+                });
+            });
+        </script>
+    }
+</body>
+</html>

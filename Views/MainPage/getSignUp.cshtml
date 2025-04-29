@@ -3,16 +3,17 @@
 <ul class="left-menu">
     <li>
         <i class="fa fa-arrow-left" aria-hidden="true" onclick="location.href='/MainPage/getMainPage'"
-           style="color: #ef2d56; font-size: 30px; outline-color: #817049 "></i>
+           style="color: #800000; font-size: 30px; outline-color: #817049 "></i>
+    </li>
+    <li>
+        <img src="~/Images/logo.png" alt="Alternate Text" id="logo_nav_id" onclick="location.href='/MainPage/getMainPage'" />
     </li>
 </ul>
-@*<ul class="right-menu">
-    <li><a href="/MainPage/getMainPage" style="font-weight: bold;">Sign Out</a></li>
-    <li><a href="mailto:qaisihabnimer@gmail.com" style="font-weight: bold;">Contact</a></li>
-</ul>*@
 @using (Html.BeginForm("getSignUp", "MainPage", FormMethod.Post))
 {
-    
+    <br />
+    <br />
+    <br />
     <h2>REGISTRATION PAGE</h2>
     <div class="container">
         <form id="creat">
@@ -28,7 +29,7 @@
                     Password
                 </b>
             </label>
-            <input type="Password" name="Password" id="Pass" placeholder="Hard Pass Only" minlength="7" maxlength="14" required>
+            <input type="Password" name="Password" id="Pass" placeholder="Minimum:7 Maximum:14 " minlength="7" maxlength="14" required>
             <br><br>
             <input type="checkbox" onclick="myFunctionShowPass()">Show Password
             <script>
@@ -42,35 +43,50 @@
                 }
             </script>
             <br /><br />
-            <input type="submit" name="log" id="log" value="Registrate" onclick="location.href = '/MainPage/getMainPage';">
-            @if (ViewBag.faildSignUpMessage != null)
-            {
-                <script type="text/javascript">
-                var faildSignUpMessage = "@Html.Raw(ViewBag.faildSignUpMessage)";
-                window.onload = function () {
-                alert(faildSignUpMessage);
-                };
-                </script>
-            }
-
-            @*else if (ViewBag.sucessSignUpMessage != null)
-        {
-            <script type="text/javascript">
-            var sucessSignUpMessage = "@Html.Raw(ViewBag.sucessSignUpMessage)";
-            window.onload = function () {
-            alert(sucessSignUpMessage);
-            };
-            </script>
-        }*@
+            <input class="registrate" type="submit" name="log" id="log" value="Registrate">
             <br><br>
         </form>
         <div id="validation-box">
             <h4>Password Must Contain</h4>
             <p id="letter" class="invalid">Lowercase Letter</p>
-            <p id="capital" class="invalid">Capitalcase Letter</p>
-            <p id="number" class="invalid">Number</p>
+            <p id="capital" class="invalid">UpperCase Letter</p>
             <p id="symbols" class="invalid">Symbols</p>
+            <p id="number" class="invalid">Number</p>
         </div>
+        @if (ViewBag.faildSignUpMessage == " This Account is Valid ")
+        {
+            <script>
+                swal({
+                    title: "This Account Is Already Existed Do you Want To Login ?",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willCreate) => {
+                    if (willCreate) {
+                        location.href = "/MainPage/getMainPage";
+                    } else {
+                        location.href = "/MainPage/getSignUp";
+                    }
+                });
+            </script>
+        }
+        else if (ViewBag.SignUpMessage == "OK")
+        {
+            <script>
+                swal({
+                title: "Welcome To Our Family",
+                icon: "success",
+                buttons: true,
+                dangerMode: true,
+                }).then((willCreate) => {
+                if (willCreate) {
+                location.href = "/MainPage/getMainPage";
+                } else {
+                location.href = "/MainPage/getSignUp";
+                }
+                });
+            </script>
+        }
         <script id="signUpScript">
             var myInput = document.getElementById("Pass");
             var letter = document.getElementById("letter");
@@ -96,7 +112,6 @@
                     letter.classList.add("invalid");
                 }
 
-
                 var upperCaseLetters = /[A-Z]/g;
                 if (myInput.value.match(upperCaseLetters)) {
                     capital.classList.remove("invalid");
@@ -106,7 +121,6 @@
                     capital.classList.remove("valid");
                     capital.classList.add("invalid");
                 }
-
 
                 var numbers = /[0-9]/g;
                 if (myInput.value.match(numbers)) {
@@ -118,7 +132,7 @@
                     number.classList.add("invalid");
                 }
 
-                var symbols = /[$&+,:;=?#|'<>.^*()%!-]/g;
+                var symbols = /[$&+,:;=?#|'<>.^*()%!-@('@')'']/g;
                 if (myInput.value.match(symbols)) {
                     symbol.classList.remove("invalid");
                     symbol.classList.add("valid");
@@ -135,10 +149,7 @@
                     signUp_Btn.disabled = true;
                 }
             }
-
         </script>
     </div>
 }
-
-
 

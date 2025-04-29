@@ -6,17 +6,16 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Web;
 
-
 namespace DinarakProject01.Models
 {
     public class DinarakDbContext:DbContext
     {
-     public DinarakDbContext():base("DinarakProjectConnectionString"){ 
-     }
+    public DinarakDbContext():base("DinarakProjectConnectionString"){ 
+    }
         public DbSet<DinarakClass>dinarakClasses { get; set; }
         public DbSet<BookClass> bookClasses { get; set; }
-        
-        
+        public DbSet<Comments> commentsClasses { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DinarakClass>()
@@ -24,8 +23,14 @@ namespace DinarakProject01.Models
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             modelBuilder.Entity<BookClass>()
-               .Property(e => e.SerialNumber)
-               .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+                .Property(e => e.SerialNumber)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            modelBuilder.Entity<Comments>()
+                .HasRequired(c => c.Book)
+                .WithMany(b => b.Comments)
+                .HasForeignKey(c => c.SerialNumber)
+                .WillCascadeOnDelete(false); // Optional: Configure delete behavior
         }
 
     }
